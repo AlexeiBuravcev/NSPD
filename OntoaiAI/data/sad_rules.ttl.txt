@@ -1,0 +1,172 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sad: <http://example.org/ontology/sad#> .
+
+# ==============================================================================
+# 1. METADATA ОНТОЛОГИИ
+# ==============================================================================
+sad:RulesOntology a owl:Ontology ;
+    rdfs:label "Онтология нормативных правил и ограничений СП 53.13330.2019"@ru ;
+    rdfs:comment "Описывает нормативные требования (п. 6.6, 6.7, 6.8 СП 53.13330.2019) в виде экземпляров класса Rule. Каждое правило жестко связано с кодами классов и характеристик из JSON-классификатора (CLF_SAD_OBJ_01) для обеспечения сквозной семантической связности при обработке LLM."@ru ;
+    owl:versionInfo "1.0.0" ;
+    owl:imports <http://example.org/ontology/sad_data> . # Ссылка на предыдущую онтологию данных
+
+# ==============================================================================
+# 2. TBox: КЛАССЫ И СВОЙСТВА ДЛЯ ОПИСАНИЯ ПРАВИЛ
+# ==============================================================================
+sad:NormativeRule a owl:Class ;
+    rdfs:label "Нормативное правило"@ru ;
+    rdfs:comment "Экземпляр этого класса описывает конкретное требование из свода правил."@ru .
+
+# Свойства для связи с классификатором (Ключевой элемент для LLM!)
+sad:linkedClassifierClassCode a owl:DatatypeProperty ;
+    rdfs:label "Код класса из классификатора"@ru ;
+    rdfs:domain sad:NormativeRule ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Ссылка на class_code из JSON-классификатора, к которому применяется правило."@ru .
+
+sad:linkedClassifierPropertyCode a owl:DatatypeProperty ;
+    rdfs:label "Код характеристики из классификатора"@ru ;
+    rdfs:domain sad:NormativeRule ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Ссылка на attr_code из JSON-классификатора, значение которого проверяется."@ru .
+
+# Свойства для описания логики правила
+sad:hasOperator a owl:DatatypeProperty ;
+    rdfs:label "Оператор сравнения"@ru ;
+    rdfs:domain sad:NormativeRule ;
+    rdfs:range xsd:string ; # Например: ">=", "<=", "=="
+    rdfs:comment "Математический оператор для проверки значения."@ru .
+
+sad:hasThresholdValue a owl:DatatypeProperty ;
+    rdfs:label "Пороговое значение"@ru ;
+    rdfs:domain sad:NormativeRule ;
+    rdfs:range xsd:float ;
+    rdfs:comment "Числовое значение, с которым сравнивается факт."@ru .
+
+sad:hasSourceReference a owl:DatatypeProperty ;
+    rdfs:label "Источник правила"@ru ;
+    rdfs:domain sad:NormativeRule ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Конкретный пункт нормативного документа."@ru .
+
+sad:ruleDescription a owl:DatatypeProperty ;
+    rdfs:label "Описание правила"@ru ;
+    rdfs:domain sad:NormativeRule ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Человекочитаемое описание условия применения правила."@ru .
+
+# ==============================================================================
+# 3. ABox: ЭКЗЕМПЛЯРЫ ПРАВИЛ (на основе п. 6.6, 6.7, 6.8 СП 53.13330.2019)
+# ==============================================================================
+
+# --- ПУНКТ 6.6: Расстояния до красных линий ---
+sad:Rule_6_6_House_Street a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_HOUSE" ;
+    sad:linkedClassifierPropertyCode "CHR_001_04" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 5.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.6" ;
+    sad:ruleDescription "Расстояние от садового или жилого дома до красной линии улицы должно быть не менее 5 м."@ru .
+
+sad:Rule_6_6_House_Drive a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_HOUSE" ;
+    sad:linkedClassifierPropertyCode "CHR_001_05" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 3.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.6" ;
+    sad:ruleDescription "Расстояние от садового или жилого дома до красной линии проезда должно быть не менее 3 м."@ru .
+
+sad:Rule_6_6_Utility_RedLine a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_UTILITY" ;
+    sad:linkedClassifierPropertyCode "CHR_003_04" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 5.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.6" ;
+    sad:ruleDescription "Расстояния от хозяйственных построек до красных линий улиц и проездов должны быть не менее 5 м."@ru .
+
+# --- ПУНКТ 6.7: Минимальные расстояния до границы соседнего участка ---
+sad:Rule_6_7_House_Boundary a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_HOUSE" ;
+    sad:linkedClassifierPropertyCode "CHR_001_03" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 3.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.7" ;
+    sad:ruleDescription "Минимальное расстояние от садового (или жилого) дома до границы соседнего участка - 3 м."@ru .
+
+sad:Rule_6_7_Livestock_Boundary a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_LIVESTOCK" ;
+    sad:linkedClassifierPropertyCode "CHR_002_03" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 4.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.7" ;
+    sad:ruleDescription "Минимальное расстояние от отдельно стоящей хозпостройки с помещениями для скота и птицы до границы соседнего участка - 4 м."@ru .
+
+sad:Rule_6_7_Utility_Boundary a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_UTILITY" ;
+    sad:linkedClassifierPropertyCode "CHR_003_03" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 1.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.7" ;
+    sad:ruleDescription "Минимальное расстояние от других хозяйственных построек до границы соседнего участка - 1 м."@ru .
+
+# Для растительности правило зависит от типа (высокорослое, среднерослое, кустарник). 
+# LLM должна будет проверить значение CHR_006_03 перед применением конкретного порога для CHR_006_04.
+sad:Rule_6_7_Veg_Tall a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_VEGETATION" ;
+    sad:linkedClassifierPropertyCode "CHR_006_04" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 3.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.7" ;
+    sad:ruleDescription "Расстояние от стволов высокорослых деревьев до границы соседнего участка - 3 м (проверять при CHR_006_03 = 'высокорослое дерево')."@ru .
+
+sad:Rule_6_7_Veg_Medium a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_VEGETATION" ;
+    sad:linkedClassifierPropertyCode "CHR_006_04" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 2.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.7" ;
+    sad:ruleDescription "Расстояние от стволов среднерослых деревьев до границы соседнего участка - 2 м (проверять при CHR_006_03 = 'среднерослое дерево')."@ru .
+
+sad:Rule_6_7_Veg_Shrub a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_VEGETATION" ;
+    sad:linkedClassifierPropertyCode "CHR_006_04" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 1.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.7" ;
+    sad:ruleDescription "Расстояние от кустарника до границы соседнего участка - 1 м (проверять при CHR_006_03 = 'кустарник')."@ru .
+
+# --- ПУНКТ 6.8: Минимальные расстояния между постройками ---
+sad:Rule_6_8_House_to_Sanitary a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_SANITARY" ;
+    sad:linkedClassifierPropertyCode "CHR_004_03" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 8.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.8" ;
+    sad:ruleDescription "Минимальное расстояние от садового дома или жилого дома до душа, отдельно стоящей бани (сауны), надворной уборной - 8 м."@ru .
+
+sad:Rule_6_8_Well_to_Sanitary a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_SANITARY" ;
+    sad:linkedClassifierPropertyCode "CHR_004_04" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 8.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.8" ;
+    sad:ruleDescription "Минимальное расстояние от колодца до надворной уборной и компостного устройства - 8 м."@ru .
+
+sad:Rule_6_8_Sanitary_to_Neighbor_House a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_SANITARY" ;
+    sad:linkedClassifierPropertyCode "CHR_004_05" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 12.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.8" ;
+    sad:ruleDescription "При отсутствии централизованной канализации расстояние от надворной уборной до стен соседнего дома - не менее 12 м."@ru .
+
+sad:Rule_6_8_Windows_to_Neighbor a sad:NormativeRule ;
+    sad:linkedClassifierClassCode "CLS_OBJ_HOUSE" ;
+    sad:linkedClassifierPropertyCode "CHR_001_06" ;
+    sad:hasOperator ">=" ;
+    sad:hasThresholdValue 4.0 ;
+    sad:hasSourceReference "СП 53.13330.2019, п. 6.8" ;
+    sad:ruleDescription "Расстояния от окон жилых помещений до стен дома и хозяйственных построек, расположенных на соседних садовых земельных участках, должны быть не менее 4 м."@ru .

@@ -1,0 +1,337 @@
+{
+  "classifier_metadata": {
+    "id": "CLF_SAD_OBJ_01",
+    "name": "Классификатор объектов садового земельного участка",
+    "version": "1.2.0"
+    },
+  "object_classes": [
+    {
+      "id": "CLS_001",
+      "class_code": "CLS_OBJ_HOUSE",
+      "name": "Садовый или жилой дом",
+      "description": "Здание, предназначенное для круглогодичного или сезонного проживания, состоящее из жилых комнат и помещений вспомогательного использования.",
+      "attributes": [
+        {
+          "attr_code": "CHR_001_01",
+          "name": "Идентификатор",
+          "description": "Уникальный идентификатор объекта в системе",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_001_02",
+          "name": "Наименование",
+          "description": "Полное наименование объекта",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_GEOMETRY",
+          "name": "geometry",
+          "description": "Тип пространственного представления объекта на местности согласно спецификации OGC/GeoJSON.",
+          "data_type": "geometry_type",
+          "is_mandatory": true,
+          "allowed_types": ["Point", "Polygon", "MultiPolygon"]
+        },
+        {
+          "attr_code": "CHR_001_03",
+          "name": "Расстояние до границы соседнего участка",
+          "description": "Минимальное расстояние от цоколя или стены дома до межи соседнего участка. Измеряется от выступающих частей, если они выступают более чем на 50 см.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.7"
+        },
+        {
+          "attr_code": "CHR_001_04",
+          "name": "Расстояние до красной линии улицы",
+          "description": "Расстояние от дома до красной линии улицы.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.6"
+        },
+        {
+          "attr_code": "CHR_001_05",
+          "name": "Расстояние до красной линии проезда",
+          "description": "Расстояние от дома до красной линии проезда.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.6"
+        },
+        {
+          "attr_code": "CHR_001_06",
+          "name": "Расстояние до окон соседнего дома",
+          "description": "Расстояние от окон жилых помещений до стен дома или хозяйственных построек на соседнем участке.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.8"
+        }
+      ]
+    },
+    {
+      "id": "CLS_002",
+      "class_code": "CLS_OBJ_LIVESTOCK",
+      "name": "Хозяйственная постройка для скота и птицы",
+      "description": "Отдельно стоящая хозяйственная постройка (или часть дома), оборудованная помещениями для содержания сельскохозяйственных животных или птицы.",
+      "attributes": [
+        {
+          "attr_code": "CHR_002_01",
+          "name": "Идентификатор",
+          "description": "Уникальный идентификатор объекта в системе",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_002_02",
+          "name": "Наименование",
+          "description": "Полное наименование объекта",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_GEOMETRY",
+          "name": "geometry",
+          "description": "Тип пространственного представления объекта на местности согласно спецификации OGC/GeoJSON.",
+          "data_type": "geometry_type",
+          "is_mandatory": true,
+          "allowed_types": ["Point", "Polygon", "MultiPolygon"]
+        },
+        {
+          "attr_code": "CHR_002_03",
+          "name": "Расстояние до границы соседнего участка",
+          "description": "Минимальное расстояние от стены постройки до межи соседнего участка.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.7"
+        }
+      ]
+    },
+    {
+      "id": "CLS_003",
+      "class_code": "CLS_OBJ_UTILITY",
+      "name": "Прочая хозяйственная постройка",
+      "description": "Сараи, навесы, теплицы, погреба, заборы и другие сооружения, не предназначенные для содержания скота/птицы и не являющиеся санитарными объектами.",
+      "attributes": [
+        {
+          "attr_code": "CHR_003_01",
+          "name": "Идентификатор",
+          "description": "Уникальный идентификатор объекта в системе",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_003_02",
+          "name": "Наименование",
+          "description": "Полное наименование объекта",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_GEOMETRY",
+          "name": "geometry",
+          "description": "Тип пространственного представления объекта на местности согласно спецификации OGC/GeoJSON.",
+          "data_type": "geometry_type",
+          "is_mandatory": true,
+          "allowed_types": ["Point", "LineString", "MultiLineString", "Polygon", "MultiPolygon"]
+        },
+        {
+          "attr_code": "CHR_003_03",
+          "name": "Расстояние до границы соседнего участка",
+          "description": "Минимальное расстояние от стены постройки до межи соседнего участка.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.7"
+        },
+        {
+          "attr_code": "CHR_003_04",
+          "name": "Расстояние до красных линий",
+          "description": "Расстояние от хозяйственных построек до красных линий улиц и проездов.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.6"
+        }
+      ]
+    },
+    {
+      "id": "CLS_004",
+      "class_code": "CLS_OBJ_SANITARY",
+      "name": "Санитарно-гигиеническая постройка",
+      "description": "Отдельно стоящая баня (сауна), душ или надворная уборная.",
+      "attributes": [
+        {
+          "attr_code": "CHR_004_01",
+          "name": "Идентификатор",
+          "description": "Уникальный идентификатор объекта в системе",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_004_02",
+          "name": "Наименование",
+          "description": "Полное наименование объекта",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_GEOMETRY",
+          "name": "geometry",
+          "description": "Тип пространственного представления объекта на местности согласно спецификации OGC/GeoJSON.",
+          "data_type": "geometry_type",
+          "is_mandatory": true,
+          "allowed_types": ["Point", "Polygon", "MultiPolygon"]
+        },
+        {
+          "attr_code": "CHR_004_03",
+          "name": "Расстояние до садового или жилого дома",
+          "description": "Минимальное расстояние от санитарной постройки до жилого или садового дома.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.8"
+        },
+        {
+          "attr_code": "CHR_004_04",
+          "name": "Расстояние до источника водоснабжения (колодца)",
+          "description": "Минимальное расстояние от надворной уборной до колодца или артезианской скважины.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.8"
+        },
+        {
+          "attr_code": "CHR_004_05",
+          "name": "Расстояние до стен соседнего дома (при отсутствии канализации)",
+          "description": "Минимальное расстояние от надворной уборной до стен соседнего дома в условиях отсутствия централизованной канализации.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.8"
+        }
+      ]
+    },
+    {
+      "id": "CLS_005",
+      "class_code": "CLS_OBJ_WATER_SOURCE",
+      "name": "Источник водоснабжения (Колодец)",
+      "description": "Шахтный или мелкотрубчатый колодец, каптаж родника для хозяйственно-питьевых нужд.",
+      "attributes": [
+        {
+          "attr_code": "CHR_005_01",
+          "name": "Идентификатор",
+          "description": "Уникальный идентификатор объекта в системе",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_005_02",
+          "name": "Наименование",
+          "description": "Полное наименование объекта",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_GEOMETRY",
+          "name": "geometry",
+          "description": "Тип пространственного представления объекта на местности согласно спецификации OGC/GeoJSON.",
+          "data_type": "geometry_type",
+          "is_mandatory": true,
+          "allowed_types": ["Point"]
+        },
+        {
+          "attr_code": "CHR_005_03",
+          "name": "Расстояние до надворной уборной",
+          "description": "Минимальное санитарное расстояние от колодца до надворной уборной.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.8"
+        }
+      ]
+    },
+    {
+      "id": "CLS_006",
+      "class_code": "CLS_OBJ_VEGETATION",
+      "name": "Деревья и кустарники",
+      "description": "Многолетние насаждения на садовом участке.",
+      "attributes": [
+        {
+          "attr_code": "CHR_006_01",
+          "name": "Идентификатор",
+          "description": "Уникальный идентификатор объекта в системе",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_006_02",
+          "name": "Наименование",
+          "description": "Полное наименование объекта",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_GEOMETRY",
+          "name": "geometry",
+          "description": "Тип пространственного представления объекта на местности согласно спецификации OGC/GeoJSON.",
+          "data_type": "geometry_type",
+          "is_mandatory": true,
+          "allowed_types": ["Point", "LineString", "MultiLineString", "Polygon", "MultiPolygon"]
+        },
+        {
+          "attr_code": "CHR_006_03",
+          "name": "Тип по высоте",
+          "description": "Классификация насаждения: высокорослое дерево, среднерослое дерево или кустарник.",
+          "data_type": "string",
+          "source_document": "СП 53.13330.2019, п. 6.7"
+        },
+        {
+          "attr_code": "CHR_006_04",
+          "name": "Расстояние до границы соседнего участка",
+          "description": "Расстояние от ствола дерева или кустарника до межи соседнего участка.",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.7"
+        }
+      ]
+    },
+    {
+      "id": "CLS_007",
+      "class_code": "CLS_OBJ_GARAGE",
+      "name": "Гараж или навес для автомобиля",
+      "description": "Сооружение для стоянки автомобилей (отдельно стоящее, встроенное или пристроенное).",
+      "attributes": [
+        {
+          "attr_code": "CHR_007_01",
+          "name": "Идентификатор",
+          "description": "Уникальный идентификатор объекта в системе",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_007_02",
+          "name": "Наименование",
+          "description": "Полное наименование объекта",
+          "data_type": "string",
+          "is_mandatory": true
+        },
+        {
+          "attr_code": "CHR_GEOMETRY",
+          "name": "geometry",
+          "description": "Тип пространственного представления объекта на местности согласно спецификации OGC/GeoJSON.",
+          "data_type": "geometry_type",
+          "is_mandatory": true,
+          "allowed_types": ["Point", "Polygon", "MultiPolygon"]
+        },
+        {
+          "attr_code": "CHR_007_03",
+          "name": "Тип размещения",
+          "description": "Способ размещения: отдельно стоящий, встроенный или пристроенный к дому/постройкам.",
+          "data_type": "string",
+          "source_document": "СП 53.13330.2019, п. 6.10"
+        },
+        {
+          "attr_code": "CHR_007_04",
+          "name": "Расстояние до границы соседнего участка",
+          "description": "Расстояние от стены гаража до межи соседнего участка (измеряется отдельно при блокировании).",
+          "data_type": "number",
+          "unit": "метры",
+          "source_document": "СП 53.13330.2019, п. 6.9"
+        }
+      ]
+    }
+  ]
+}
